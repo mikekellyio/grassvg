@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Parabola from "./index";
 import queryString from "query-string";
-import { Link } from "react-router-dom";
 
 export default class ParabolaPage extends Component {
   static propTypes = {
