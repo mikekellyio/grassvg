@@ -85,7 +85,28 @@ export default class Field extends Component {
 
     return (
       <svg width={this.props.width} height={this.props.height}>
-        {blades}
+        <defs>
+          <filter id="lightBlur">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="2,2" />
+          </filter>
+          <filter id="blur">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="4,4" />
+          </filter>
+        </defs>
+        {this.props.numBlades >= 200 && (
+          <g>
+            <g className="blurred" transform="translate(-75 -35)">
+              <g transform="translate(-75 -35)">{blades}</g>
+              <g transform="translate(75 -35)">{blades}</g>
+            </g>
+            <g className="lightlyBlurred">
+              <g transform="translate(-50 20)">{blades}</g>
+              <g transform="translate(50 20)">{blades}</g>
+            </g>
+            <g transform="translate(0 80)">{blades}</g>
+          </g>
+        )}
+        {this.props.numBlades < 200 && <g>{blades}</g>}
       </svg>
     );
   }

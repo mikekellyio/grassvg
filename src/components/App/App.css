@@ -1,5 +1,4 @@
 .App {
-  padding-top: 1.5em;
   text-align: center;
 }
 
@@ -31,4 +30,12 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.blurred {
+  filter: url(#blur);
+}
+
+.lightlyBlurred {
+  filter: url(#lightBlur);
 }
