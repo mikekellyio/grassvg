@@ -36,7 +36,7 @@ export default class Field extends Component {
     var width = this.props.width || 1200;
     var bladeHeightVariance = this.props.bladeHeightVariance;
     var blades = [];
-    var centeringOffset = (width - offset * count) / 2 - (offset * count) / 2;
+    var centeringOffset = (width - offset * count) / 2;
     for (var i = 1; i <= count; i++) {
       var x = i * offset + centeringOffset;
       blades.push({
