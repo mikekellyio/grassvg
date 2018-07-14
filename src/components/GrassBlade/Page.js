@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Field from "../Field";
 import queryString from "query-string";
+import { SizeMe } from "react-sizeme";
 
 export default class GrassPage extends Component {
   static propTypes = {
@@ -20,6 +21,12 @@ export default class GrassPage extends Component {
     if (props.showControlPoints)
       props.showControlPoints = props.showControlPoints !== 0;
 
-    return <Field height="600" width="1200" {...props} />;
+    return (
+      <SizeMe monitorHeight monitorWidth>
+        {({ size }) => (
+          <Field height={size.height} width={size.width} {...props} />
+        )}
+      </SizeMe>
+    );
   }
 }

@@ -4,9 +4,9 @@ import GrassBlade from "../GrassBlade";
 
 export default class Field extends Component {
   static propTypes = {
-    height: PropTypes.string,
+    height: PropTypes.number,
     bladeHeightVariance: PropTypes.number,
-    width: PropTypes.string,
+    width: PropTypes.number,
     numBlades: PropTypes.number,
     slop: PropTypes.number,
     numPoints: PropTypes.number,
@@ -32,20 +32,23 @@ export default class Field extends Component {
   }
 
   blades = (count, offset) => {
-    var height = this.props.height;
+    var height = this.props.height || 600;
+    var width = this.props.width || 1200;
     var bladeHeightVariance = this.props.bladeHeightVariance;
     var blades = [];
+    var centeringOffset = (width - offset * count) / 2 - (offset * count) / 2;
     for (var i = 1; i <= count; i++) {
+      var x = i * offset + centeringOffset;
       blades.push({
         a: this.point(
-          i * offset,
+          x,
           Math.random() * bladeHeightVariance +
             (height - bladeHeightVariance || height - height / 4) -
             40
         ),
-        b: this.point(i * offset, Math.random() * 10 + 20),
+        b: this.point(x, Math.random() * 10 + 20),
         c: this.point(
-          i * offset + Math.random() * 100,
+          x + Math.random() * 100,
           Math.random() * (bladeHeightVariance || 100)
         )
       });
