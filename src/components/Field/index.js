@@ -36,9 +36,8 @@ export default class Field extends Component {
     var width = this.props.width || 1200;
     var bladeHeightVariance = this.props.bladeHeightVariance;
     var blades = [];
-    var centeringOffset = (width - offset * count) / 2;
     for (var i = 1; i <= count; i++) {
-      var x = i * offset + centeringOffset;
+      var x = i * offset;
       blades.push({
         a: this.point(
           x,
@@ -73,6 +72,7 @@ export default class Field extends Component {
   };
 
   render() {
+    var width = this.props.width;
     var grassProps = Object.assign(
       {
         numPoints: 20,
@@ -82,9 +82,15 @@ export default class Field extends Component {
       },
       this.props
     );
-    var blades = this.state.blades.map(function(cp, i) {
-      return <GrassBlade a={cp.a} b={cp.b} c={cp.c} key={i} {...grassProps} />;
-    });
+    var blades = this.state.blades.map((cp, i) => (
+      <GrassBlade a={cp.a} b={cp.b} c={cp.c} key={i} {...grassProps} />
+    ));
+
+    var xVals = this.state.blades.map(cp => [cp.a.x, cp.b.x, cp.c.x]);
+    xVals = [].concat(...xVals).sort(); //flatten array and sort
+    var fieldWidth = xVals[xVals.length - 1] - xVals[0];
+
+    var centeringOffset = (width - fieldWidth) / 2;
 
     return (
       <svg>
@@ -96,20 +102,22 @@ export default class Field extends Component {
             <feGaussianBlur in="SourceGraphic" stdDeviation="4,4" />
           </filter>
         </defs>
-        {this.props.numBlades >= 200 && (
-          <g>
-            <g className="blurred" transform="translate(-75 -35)">
-              <g transform="translate(-75 -35)">{blades}</g>
-              <g transform="translate(75 -35)">{blades}</g>
+        <g transform={`translate(${centeringOffset} 0)`}>
+          {this.props.numBlades >= 200 && (
+            <g>
+              <g className="blurred" transform="translate(-75 -35)">
+                <g transform="translate(-75 -35)">{blades}</g>
+                <g transform="translate(75 -35)">{blades}</g>
+              </g>
+              <g className="lightlyBlurred">
+                <g transform="translate(-50 20)">{blades}</g>
+                <g transform="translate(50 20)">{blades}</g>
+              </g>
+              <g transform="translate(0 80)">{blades}</g>
             </g>
-            <g className="lightlyBlurred">
-              <g transform="translate(-50 20)">{blades}</g>
-              <g transform="translate(50 20)">{blades}</g>
-            </g>
-            <g transform="translate(0 80)">{blades}</g>
-          </g>
-        )}
-        {this.props.numBlades < 200 && <g>{blades}</g>}
+          )}
+          {this.props.numBlades < 200 && <g>{blades}</g>}
+        </g>
       </svg>
     );
   }
