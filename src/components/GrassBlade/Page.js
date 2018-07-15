@@ -9,6 +9,28 @@ export default class GrassPage extends Component {
     location: PropTypes.object
   };
 
+  updateDimensions = () => {
+    var w = window,
+      d = document,
+      documentElement = d.documentElement,
+      body = d.getElementsByTagName("body")[0],
+      width = w.innerWidth || documentElement.clientWidth || body.clientWidth,
+      height =
+        w.innerHeight || documentElement.clientHeight || body.clientHeight;
+
+    this.setState({ width: width, height: height });
+    // if you are using ES2015 I'm pretty sure you can do this: this.setState({width, height});
+  };
+  componentWillMount() {
+    this.updateDimensions();
+  }
+  componentDidMount() {
+    window.addEventListener("resize", this.updateDimensions);
+  }
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.updateDimensions);
+  }
+
   render() {
     const values = queryString.parse(this.props.location.search);
     var props = Object.assign(
@@ -22,7 +44,7 @@ export default class GrassPage extends Component {
       props.showControlPoints = props.showControlPoints !== 0;
 
     return (
-      <SizeMe monitorHeight monitorWidth>
+      <SizeMe monitorHeight={true} monitorWidth={true} refreshRate={32}>
         {({ size }) => (
           <Field height={size.height} width={size.width} {...props} />
         )}

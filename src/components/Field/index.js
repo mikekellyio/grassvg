@@ -87,7 +87,7 @@ export default class Field extends Component {
     });
 
     return (
-      <svg width={this.props.width} height={this.props.height}>
+      <svg>
         <defs>
           <filter id="lightBlur">
             <feGaussianBlur in="SourceGraphic" stdDeviation="2,2" />

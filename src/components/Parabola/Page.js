@@ -10,6 +10,28 @@ class ParabolaPage extends Component {
     size: PropTypes.object
   };
 
+  updateDimensions = () => {
+    var w = window,
+      d = document,
+      documentElement = d.documentElement,
+      body = d.getElementsByTagName("body")[0],
+      width = w.innerWidth || documentElement.clientWidth || body.clientWidth,
+      height =
+        w.innerHeight || documentElement.clientHeight || body.clientHeight;
+
+    this.setState({ width: width, height: height });
+    // if you are using ES2015 I'm pretty sure you can do this: this.setState({width, height});
+  };
+  componentWillMount() {
+    this.updateDimensions();
+  }
+  componentDidMount() {
+    window.addEventListener("resize", this.updateDimensions);
+  }
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.updateDimensions);
+  }
+
   render() {
     var values = queryString.parse(this.props.location.search);
 
@@ -35,6 +57,7 @@ class ParabolaPage extends Component {
     var cpDifference = xVals[2] - xVals[0];
 
     var centeringOffset = width / 2 - (xVals[0] + cpDifference / 2);
+    centeringOffset = centeringOffset < 0 ? 0 : centeringOffset;
     props.a.x = props.a.x + centeringOffset;
     props.b.x = props.b.x + centeringOffset;
     props.c.x = props.c.x + centeringOffset;
@@ -43,6 +66,7 @@ class ParabolaPage extends Component {
     cpDifference = yVals[2] - yVals[0];
 
     centeringOffset = height / 2 - (yVals[0] + cpDifference / 2);
+    centeringOffset = centeringOffset < 0 ? 0 : centeringOffset;
     props.a.y = props.a.y + centeringOffset;
     props.b.y = props.b.y + centeringOffset;
     props.c.y = props.c.y + centeringOffset;
