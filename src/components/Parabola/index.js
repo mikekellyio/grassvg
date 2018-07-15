@@ -36,11 +36,12 @@ export default class Parabola extends Component {
     var showParabola =
       this.props.showParabola || this.props.showParabola === undefined;
 
+    var cpColors = randomColor({ luminosity: "birght", count: 3 });
     var controlPoints = (
       <g className="controlPoints">
-        <circle cx={a.x} cy={a.y} r="5" fill="red" />
-        <circle cx={b.x} cy={b.y} r="5" fill="red" />
-        <circle cx={c.x} cy={c.y} r="5" fill="red" />
+        <circle cx={a.x} cy={a.y} r="5" fill={cpColors[0]} />
+        <circle cx={b.x} cy={b.y} r="5" fill={cpColors[1]} />
+        <circle cx={c.x} cy={c.y} r="5" fill={cpColors[2]} />
       </g>
     );
 
