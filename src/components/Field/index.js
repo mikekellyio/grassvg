@@ -102,7 +102,7 @@ export default class Field extends Component {
             <feGaussianBlur in="SourceGraphic" stdDeviation="4,4" />
           </filter>
         </defs>
-        <g transform={`translate(${centeringOffset} 0)`}>
+        <g transform={`translate(${centeringOffset - 75} 0)`}>
           {this.props.numBlades >= 200 && (
             <g>
               <g className="blurred" transform="translate(-75 -35)">
