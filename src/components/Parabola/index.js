@@ -40,8 +40,17 @@ export default class Parabola extends Component {
     var controlPoints = (
       <g className="controlPoints">
         <circle cx={a.x} cy={a.y} r="5" fill={cpColors[0]} />
+        <text x={a.x - 5} y={a.y + 18} fontSize="14px">
+          A
+        </text>
         <circle cx={b.x} cy={b.y} r="5" fill={cpColors[1]} />
+        <text x={b.x - 5} y={b.y + 18} fontSize="14px">
+          B
+        </text>
         <circle cx={c.x} cy={c.y} r="5" fill={cpColors[2]} />
+        <text x={c.x - 5} y={c.y + 18} fontSize="14px">
+          C
+        </text>
       </g>
     );
 
